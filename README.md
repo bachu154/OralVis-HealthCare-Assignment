@@ -1,93 +1,208 @@
-# OralVis Healthcare
+🦷 OralVis Healthcare – Full Stack Web Application
 
-Full-stack web app with two user roles:
-- Technician: upload patient dental scans
-- Dentist: view scans and generate per-scan PDF reports
+📖 Project Overview
 
-Tech stack:
-- Frontend: React (Vite), React Router, axios, Tailwind CSS, jsPDF
-- Backend: Node.js, Express, SQLite (sqlite3), bcryptjs, jsonwebtoken, multer, Cloudinary SDK, cors, dotenv
+OralVis Healthcare is a role-based full-stack web application designed for managing dental scan records.
 
-## Features
+Technicians: Upload patient scans with details.
 
-- JWT authentication (POST /api/login) with roles in payload { id, role }
-- Technician dashboard: upload scan image + metadata to /api/upload (multipart/form-data) → stored in Cloudinary, record in SQLite
-- Dentist dashboard: view scans (GET /api/scans), view full image, download a PDF report with image + metadata
-- Protected routing: only allow access if JWT role matches page
+Dentists: View uploaded scans, explore full-size images, and download reports as PDFs.
 
----
+This project demonstrates authentication, role-based access control, database management, cloud file storage, backend APIs, and a React-based frontend.
 
-## Quick Start
+🚀 Tech Stack
 
-### 1) Backend
+Frontend
 
-1. Copy backend/.env.example to backend/.env and fill values:
-   - JWT_SECRET=your_long_random_secret
-   - CLOUDINARY_CLOUD_NAME=...
-   - CLOUDINARY_API_KEY=...
-   - CLOUDINARY_API_SECRET=...
-   - FRONTEND_URL=http://localhost:5173
+React (Vite) – SPA for fast and interactive UI
 
-2. Install and initialize:
-   \`\`\`
-   cd backend
-   npm install
-   npm run init     # creates tables if not exist
-   npm run seed     # creates default users
-   npm run dev      # starts server on http://localhost:4000
-   \`\`\`
+React Router DOM – Navigation and protected routes
 
-Default test users:
-- Technician: tech@oralvis.com / password123
-- Dentist: dentist@oralvis.com / password123
+Axios – API requests
 
-### 2) Frontend
+jsPDF – PDF generation
 
-1. Create frontend/.env.local or copy .env.example to .env.local and adjust if needed:
-   \`\`\`
-   VITE_API_BASE_URL=http://localhost:4000
-   \`\`\`
+Backend
 
-2. Install and run:
-   \`\`\`
-   cd frontend
-   npm install
-   npm run dev      # opens http://localhost:5173
-   \`\`\`
+Node.js + Express.js – REST API server
 
-### 3) Test Flow
+SQLite – Lightweight relational database
 
-- Login as Technician → upload a scan (jpg/png). You should see a success message.
-- Login as Dentist → see scans list (thumbnail, metadata), view full image, and download a PDF report.
+bcryptjs – Password hashing
 
----
+jsonwebtoken (JWT) – Authentication & session management
 
-## Deployment Notes
+Multer – File handling
 
-- Frontend: deploy to Vercel or Netlify (static Vite build)
-- Backend: deploy to Render or Vercel (Node server). If using Vercel for serverless, adapt Express to API routes; Render is simpler for a persistent Express server.
-- CORS: set FRONTEND_URL in backend .env to your deployed frontend origin (e.g., https://oralvis.example.com)
+Cloudinary SDK – Cloud image storage
 
----
+Hosting
 
-## Scripts
+Frontend → Netlify / Vercel
 
-Backend:
-- `npm run dev` - start dev server on port 4000
-- `npm run init` - initialize SQLite schema
-- `npm run seed` - seed default users
+Backend → Render / Vercel
 
-Frontend:
-- `npm run dev` - Vite dev
-- `npm run build` - production build
-- `npm run preview` - preview build
+Database → SQLite (local file)
 
----
+✨ Features
 
-## Database
+🔑 Authentication (RBAC)
 
-SQLite file: backend/data/oralvis.db
+Secure login using email + password
 
-Tables:
-- users(id, email, password, role)
-- scans(id, patientName, patientId, scanType, region, imageUrl, uploadDate)
+Role-based access:
+
+Technician → Upload scans
+
+Dentist → View scans
+
+👩‍⚕️ Technician Dashboard
+
+Upload form with:
+
+Patient Name
+
+Patient ID
+
+Scan Type (e.g., RGB)
+
+Region (Frontal / Upper Arch / Lower Arch)
+
+Scan Image (JPG/PNG)
+
+Image uploaded to Cloudinary
+
+Data saved in SQLite
+
+🦷 Dentist Dashboard
+
+View all scans in table/grid layout
+
+Details: Patient Name, ID, Scan Type, Region, Upload Date
+
+Thumbnail + Full Image preview
+
+Download PDF Report with patient details & embedded scan
+
+📄 PDF Report
+
+Patient Name & ID
+
+Scan Type & Region
+
+Upload Date
+
+Embedded scan image
+
+📂 Project Structure
+oralvis-healthcare/
+│── backend/              # Express + SQLite + Cloudinary
+│   ├── index.js
+│   ├── database.sqlite
+│   ├── routes/
+│   ├── models/
+│   ├── controllers/
+│   └── .env.example
+│
+│── frontend/             # React + Vite
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   └── .env.example
+│
+└── README.md
+
+⚙️ Installation & Setup
+
+🔧 Prerequisites
+
+Node.js (v18+)
+
+npm or yarn
+
+Cloudinary account (for image storage)
+
+1️⃣ Clone the Repository
+git clone https://github.com/yourusername/oralvis-healthcare.git
+cd oralvis-healthcare
+
+2️⃣ Backend Setup
+cd backend
+npm install
+
+
+Create .env file (based on .env.example):
+
+PORT=5000
+JWT_SECRET=your_jwt_secret
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+
+
+Run backend server:
+
+npm start
+
+3️⃣ Frontend Setup
+cd frontend
+npm install
+
+
+Create .env file (based on .env.example):
+
+VITE_API_URL=http://localhost:5000
+
+
+Run frontend dev server:
+
+npm run dev
+
+4️⃣ Default Test Credentials
+👩‍🔬 Technician
+Email: tech@oralvis.com
+Password: 123456
+
+🧑‍⚕️ Dentist
+Email: dentist@oralvis.com
+Password: 123456
+
+🌍 Hosting
+
+Backend → Render Deployment
+
+Frontend → Netlify Deployment
+
+🔗 Live Demo: https://oralvis-healthcare-demo.netlify.app
+
+🔗 API Base URL: https://oralvis-backend.onrender.com
+
+📸 Screenshots
+
+Add screenshots after running the app. Suggested pages:
+
+Login Page
+
+
+Technician Dashboard (Upload Scan)
+
+
+Dentist Dashboard (View Scans)
+
+
+PDF Report Example
+
+
+✅ Submission Checklist
+
+ Source code (frontend + backend in one repo)
+
+ Detailed README.md
+
+ Hosted frontend + backend links
+
+ Screenshots of key pages
+
+ Default credentials provided
